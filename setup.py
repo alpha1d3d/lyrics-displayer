@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='lyrics-displayer',
-    version='0.1',
+    version='0.2',
     description='Displays lyrics of songs played on Sonos system.',
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -16,15 +16,12 @@ setup(
     license='MIT',
     packages=[
         'lyrics-displayer',
-        'lyrics-displayer.lyrics',
-        'lyrics-displayer.players',
     ],
     zip_safe=False,
     scripts=['bin/sing-along'],
     install_requires=[
-        'requests',
-        'html2text',
         'soco',
-        'PyLyrics',
+        'lyricfetch',
+        'python-magic-bin',
     ]
 )

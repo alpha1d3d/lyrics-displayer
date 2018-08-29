@@ -29,7 +29,7 @@ def duration_seconds_to_string(seconds):
     return '{}:{:02}:{:02}'.format(h, m, s)
 
 
-def display_lyrics(lyrics, track, location, position, source):
+def display_lyrics(lyrics, track, location, position):
     separator = '-' * 60
     combine_lyrics = [
         ('~ ' if i == location else '| ') +
@@ -37,10 +37,9 @@ def display_lyrics(lyrics, track, location, position, source):
     ]
     print(
         '\n'.join([
+              ' {artist}',
               '{separator}',
-              ' {source}',
-              '{separator}',
-              ' {artist} - {title}',
+              ' {title}',
               '{separator}',
         ] + combine_lyrics + [
               '{separator}',
