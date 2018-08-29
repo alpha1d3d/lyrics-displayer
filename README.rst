@@ -1,3 +1,6 @@
+[![PyPI version](https://badge.fury.io/py/lyrics-displayer.svg)](https://badge.fury.io/py/lyrics-displayer)
+
+
 Lyrics Displayer
 ----------------
 
@@ -6,7 +9,7 @@ music player connected to the same network.
 
 It then queries lyrics from various online sources and displays
 the lyrics to the command line (attempting to estimate the current
- position in the song).
+position in the song).
 
 
 Supported Players
@@ -18,9 +21,8 @@ Supported Players
 Lyrics Sources
 --------------
 
-  - PyLyrics (lyrics.wikia.com)
-
-  - Genius (genius.com)
+Integrates with [lyricfetch](https://github.com/ocaballeror/LyricFetch)
+which has an extensive list of supported sources.
 
 
 Usage

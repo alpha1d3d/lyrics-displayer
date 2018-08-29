@@ -5,8 +5,8 @@ import sys
 import os
 import select
 
-from .lyrics.pylyrics import PyLyricsSource
-from .lyrics.genius_lyrics import GeniusSource
+from lyricfetch import get_lyrics, Song
+
 from .players.sonos import SonosPlayer
 from .utils import duration_string_to_seconds, display_lyrics
 
@@ -18,11 +18,6 @@ def run():
         sys.setdefaultencoding('utf-8')
 
     player = SonosPlayer()
-
-    sources = [
-        PyLyricsSource(),
-        GeniusSource(),
-    ]
 
     if not player.connected:
         return
@@ -44,16 +39,8 @@ def run():
         position = duration_string_to_seconds(track['position'])
 
         # get lyrics
-        lyrics = None
-        source_index = 0
-        for source_index in range(0, len(sources)):
-            lyrics = sources[source_index].get_lyrics(
-                track['artist'], track['title']
-            )
-            if lyrics:
-                break
-        else:
-            lyrics = ['No Lyrics Found']
+        song = Song.from_info(track['artist'], track['title'])
+        lyrics = get_lyrics(song).split('\n')
 
         while True:
             os.system('clear')
