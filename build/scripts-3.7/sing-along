@@ -1,5 +1,0 @@
-#!python
-
-import sonos_lyrics
-
-sonos_lyrics.run()

@@ -9,14 +9,14 @@ with open(path.join(this_directory, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='lyrics-displayer',
-    version='0.4',
+    version='0.5',
     description='Displays lyrics of songs played on Sonos system.',
     long_description=long_description,
     long_description_content_type='text/x-rst',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.6',
     ],
     keywords='sonos lyrics lyricfetch',
     url='http://github.com/alpha1d3d/lyrics-displayer',
