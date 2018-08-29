@@ -15,7 +15,8 @@ class GeniusSource(LyricSource):
 
     def get_lyrics(self, artist, title):
         url = '{}api/search/lyric?page=1&q={}+{}'.format(
-            self.ROOT, artist, title
+            self.ROOT, artist,
+            title.split('(')[0]
         ).replace(' ', '+')
 
         print('Querying: {}'.format(url))
