@@ -12,11 +12,6 @@ from .utils import duration_string_to_seconds, display_lyrics
 
 
 def run():
-    if sys.version_info < (3, 0):
-        # ensure that encoding is utf-8
-        reload(sys)
-        sys.setdefaultencoding('utf-8')
-
     player = SonosPlayer()
 
     if not player.connected:
@@ -50,8 +45,9 @@ def run():
             location = int(round(percent * len(lyrics), 0))
 
             # if ended exit
-            if location > len(lyrics):
+            if location >= len(lyrics):
                 break
+            bug
 
             # display lyrics
             display_lyrics(lyrics, track, location, position)
@@ -61,10 +57,7 @@ def run():
             position += 1
 
             if sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
-                try:
-                    raw_input()
-                except NameError:
-                    input()
+                input()
                 stop = True
                 break
 

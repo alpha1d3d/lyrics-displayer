@@ -26,30 +26,26 @@ def duration_seconds_to_string(seconds):
     '''
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
-    return '{}:{:02}:{:02}'.format(h, m, s)
+    return f'{h}:{m:02}:{s:02}'
 
 
-def display_lyrics(lyrics, track, location, position, source):
+def display_lyrics(lyrics, track, location, position):
     separator = '-' * 60
+    current_timer = duration_seconds_to_string(position),
     combine_lyrics = [
         ('~ ' if i == location else '| ') +
         row for i, row in enumerate(lyrics)
+        if (location - 10) <= i and i <= (location + 10)
     ]
     print(
         '\n'.join([
-              '{separator}',
-              ' {source}',
-              '{separator}',
-              ' {artist} - {title}',
-              '{separator}',
-        ] + combine_lyrics + [
-              '{separator}',
-              ' {current_timer} / {duration}',
-              '{separator}',
+              f'{separator}',
+              f' {track["artist"]} - {track["title"]}',
+              f'{separator}',
+              f'{combine_lyrics}',
+              f'{separator}',
+              f' {current_timer} / {track["duration"]}',
+              f'{separator}',
               'Press ENTER to exit',
-        ]).format(
-              separator=separator,
-              current_timer=duration_seconds_to_string(position),
-              **track
-        )
+        ])
     )

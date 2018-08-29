@@ -22,10 +22,7 @@ class SonosPlayer(Player):
         )
         tries = 0
         while tries < 3:
-            try:
-                sonos_id = raw_input(prompt)
-            except NameError:
-                sonos_id = input(prompt)
+            sonos_id = input(prompt)
 
             if not sonos_id:
                 return

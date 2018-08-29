@@ -6,6 +6,4 @@ To do:
 
 Ideas:
 
-  [ ] - Support multiple player sources / lyric sources
-
-  [ ] - Consider using lyricfetch? 
+  [ ] - Listen to song and attempt to use voice recognition for exact song location.
