@@ -1,5 +1,4 @@
-.. image:: https://badge.fury.io/py/lyrics-displayer.svg
-    :target: https://badge.fury.io/py/lyrics-displayer
+[![PyPI version](https://badge.fury.io/py/lyrics-displayer.svg)](https://badge.fury.io/py/lyrics-displayer)
 
 Lyrics Displayer
 ----------------
