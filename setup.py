@@ -9,7 +9,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='lyrics-displayer',
-    version='0.6',
+    version='0.7',
     description='Displays lyrics of songs played on Sonos system.',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -24,7 +24,7 @@ setup(
     author_email='alpha1d3d@hotmail.com',
     license='MIT',
     packages=[
-        'lyrics-displayer',
+        'lyrics_displayer',
     ],
     zip_safe=False,
     scripts=['bin/sing-along'],

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
 
-import sonos_lyrics
+import lyrics_displayer
 
-sonos_lyrics.run()
+lyrics_displayer.run()
