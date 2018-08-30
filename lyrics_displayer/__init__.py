@@ -33,9 +33,12 @@ def run():
         duration = duration_string_to_seconds(track['duration'])
         position = duration_string_to_seconds(track['position'])
 
-        # get lyrics
+        # instantiate song
         song = Song.from_info(track['artist'], track['title'])
-        lyrics = get_lyrics(song).split('\n')
+        # fetch lyrics
+        get_lyrics(song)
+        # read lyrics
+        lyrics = song.lyrics.split('\n')
 
         while True:
             os.system('clear')
@@ -47,7 +50,6 @@ def run():
             # if ended exit
             if location >= len(lyrics):
                 break
-            bug
 
             # display lyrics
             display_lyrics(lyrics, track, location, position)
