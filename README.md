@@ -1,4 +1,5 @@
 [![PyPI version](https://badge.fury.io/py/lyrics-displayer.svg)](https://badge.fury.io/py/lyrics-displayer)
+[![Maintainability](https://api.codeclimate.com/v1/badges/640ec34ff8af33f944e9/maintainability)](https://codeclimate.com/github/alpha1d3d/lyrics-displayer/maintainability)
 
 Lyrics Displayer
 ----------------
