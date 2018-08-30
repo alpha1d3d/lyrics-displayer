@@ -8,20 +8,85 @@ import select
 from lyricfetch import get_lyrics, Song
 
 from .players.sonos import SonosPlayer
-from .utils import duration_string_to_seconds, display_lyrics
+from .utils import (
+    duration_seconds_to_string,
+    duration_string_to_seconds,
+)
+
+
+def retrieve_lyrics(track):
+    # instantiate song
+    song = Song.from_info(track['artist'], track['title'])
+    # fetch lyrics
+    get_lyrics(song)
+    # read lyrics
+    lyrics = song.lyrics.split('\n')
+    return lyrics
+
+
+def get_track_info(player):
+    track = player.get_track_info()
+
+    track['location'] = 0
+    track['duration_secs'] = duration_string_to_seconds(track['duration'])
+    track['position_secs'] = duration_string_to_seconds(track['position'])
+    return track
+
+
+def update_track_info(track):
+    # calculate location
+    percent = track['position_secs'] / track['duration_secs']
+    track['location'] = int(round(percent * track['length'], 0))
+    track['position'] = duration_seconds_to_string(track['position_secs'])
+    return track
+
+
+def display_lyrics(lyrics, track):
+    '''
+        Deals with formatting the lyrics unto the screen.
+
+        Displays the lyrics on a 30 rows moving window.
+    '''
+    display_rows = 15
+    separator = '-' * 60
+
+    combine_lyrics = '\n'.join([
+        ('@ ' if i == track['location'] else '| ') + row
+        for i, row in
+        enumerate(lyrics[
+            max([0, min([
+                track['length'] - (display_rows * 2),
+                track['location'] - display_rows]
+            )]):
+            max([display_rows * 2, track['location'] + display_rows])
+        ])
+    ])
+    print(
+        '\n'.join([
+              f'{separator}',
+              f' {track["artist"]} - {track["title"]}',
+              f'{separator}',
+              '...' if track['location'] > display_rows else '',
+              f'{combine_lyrics}',
+              '...' if track['location'] < track['length'] - display_rows
+              else '',
+              f'{separator}',
+              f' {track["position"]} / {track["duration"]}',
+              f'{separator}',
+              'Press ENTER to exit',
+        ])
+    )
 
 
 def run():
     player = SonosPlayer()
-
     if not player.connected:
         return
 
     stop = False
     not_playing = False
     while True:
-        track = player.get_track_info()
-        time.sleep(1)
+        track = get_track_info(player)
 
         if not track['title']:
             if not not_playing:
@@ -29,34 +94,23 @@ def run():
                 not_playing = True
             continue
 
-        # estimate position
-        duration = duration_string_to_seconds(track['duration'])
-        position = duration_string_to_seconds(track['position'])
-
-        # instantiate song
-        song = Song.from_info(track['artist'], track['title'])
-        # fetch lyrics
-        get_lyrics(song)
-        # read lyrics
-        lyrics = song.lyrics.split('\n')
+        lyrics = retrieve_lyrics(track)
+        track['length'] = len(lyrics)
 
         while True:
             os.system('clear')
 
-            # calculate location
-            percent = position / duration
-            location = int(round(percent * len(lyrics), 0))
-
-            # if ended exit
-            if location >= len(lyrics):
-                break
-
             # display lyrics
-            display_lyrics(lyrics, track, location, position)
+            display_lyrics(lyrics, track)
 
             # refresh display in a second
             time.sleep(1)
-            position += 1
+            track['position_secs'] += 1
+            track = update_track_info(track)
+
+            # if ended exit
+            if track['position_secs'] >= track['duration_secs']:
+                break
 
             if sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
                 input()
